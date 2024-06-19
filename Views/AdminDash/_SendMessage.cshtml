@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@using ASWebEssentials.Models.ContactModel;
+@model AdminMess
+
+<div class="border p-3 mt-5 bg-light w-75 mx-auto">
+    <div class="row pb-2">
+        <h2 class="text-black">Send Messages</h2>
+        <hr />
+    </div>
+
+    <h4 class="mb-3">Enter message details here</h4>
+    <form id="MessageForm" asp-controller="AdminDash" asp-action="SendEmail" method="post" class="w-100">
+        <div class="p-3 w-50">
+            <label for="About">The message is About: </label>
+            <select asp-for="MessAbout" class="form-control" id="About" required>
+                <option readonly value="-1">Select: </option>
+                <option value="1">Website Design and Development</option>
+                <option value="2">E-Commerce Development</option>
+                <option value="3">Complementary Store</option>
+                <option value="4">Others</option>
+            </select>
+        </div>
+        <div class="p-3 w-75">
+            <label for="Body">The message body: </label>
+            <textarea asp-for="MessBody" class="form-control" placeholder="Write here ..." style="height:200px" id="Body" required></textarea>
+            <span asp-validation-for="MessBody" class="text-danger"></span>
+        </div>
+        <div class="p-3 w-75" id="userEmailInput" style="display: none;">
+            <label for="Recipient">Enter user email:</label>
+            <input type="email" asp-for="Recipient" class="form-control" id="Recipient" name="Recipient" placeholder="Enter user email">
+        </div>
+        <!-- Send To one user button -->
+        <button type="button" class="btnClass5 ms-5 my-3" id="sendToOneUserBtn">Send To one user: <i class="fa fa-angle-double-right px-2"></i></button>
+        <!-- Submit button (initially hidden) -->
+        <button type="submit" class="btnClass5 ms-5 my-3" id="sendMessageBtn" style="display: none;">Send Message <i class="fa fa-angle-double-right px-2"></i></button>
+
+        <!-- Send To all users button -->
+        <button type="submit" class="btnClass5 ms-5 my-3" id="sendToAllUsersBtn">Send To all users: <i class="fa fa-angle-double-right px-2"></i></button>
+    </form>
+
+    <div class="d-flex justify-content-end">
+        <a asp-controller="AdminDash" asp-action="index" class="btnClass5 btn-sm">
+            Back to AdminDashBoard <i class="fa fa-angle-double-right"></i>
+        </a>
+    </div>
+
+    <div id="MessageResult" class="mt-3"></div>
+</div>
+
+<script>
+    // JavaScript to handle form submission asynchronously
+    $(function () {
+        $('#MessageForm').submit(function (e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+
+            var form = $(this);
+            var url = form.attr('action');
+            var formData = form.serialize(); // Serialize the form data
+
+            $.post(url, formData)
+                .done(function (response) {
+                    if (response.success) {
+                        // Display success message in #MessageResult div
+                        $('#MessageResult').html('<div class="alert alert-success" role="alert">' + response.message + '</div>');
+                    } else {
+                        // Display error message in #MessageResult div
+                        $('#MessageResult').html('<div class="alert alert-danger" role="alert">' + response.message + '</div>');
+                    }
+                })
+                .fail(function () {
+                    // Display error message in #MessageResult div if AJAX request fails
+                    $('#MessageResult').html('<div class="alert alert-danger" role="alert">Failed to send message. Please try again later.</div>');
+                });
+        });
+
+        // Script to toggle the visibility of the user email input field
+        $('#sendToOneUserBtn').click(function () {
+            $('#userEmailInput').toggle();
+            $('#sendMessageBtn').toggle(); // Toggle the visibility of the submit button
+            $(this).text(function (i, text) {
+                return text === 'Send To one user: ' ? 'Cancel' : 'Send To one user: '; // Change the button text
+            });
+        });
+    });
+</script>

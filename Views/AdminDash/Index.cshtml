@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<section class="Con3 bg-black">
+    <div class="container-fluid mt-3">
+        <h1 class="HeadingH1 my-5">Admin DashBoard</h1>
+        
+        <div class="row mt-6 border border-2 border-warning p-3 circolor1 text-white ">
+            @if (!string.IsNullOrEmpty(ViewData["SuccessMessage"] as string))
+            {
+                <div class="alert alert-success" role="alert">
+                    @ViewData["SuccessMessage"]
+                </div>
+            }
+            <div class="adminSidebar rounded-4 ps-2">
+                <h5 class="H4Admin"><i class="fa fa-angle-double-right px-2"></i> Charts</h5>
+                <div class="my-1 ms-4">
+                    <button type="button" class="btn btn-dark" onclick="loadPartialView('AdminDash', 'ProductsByCategory')">
+                        &nbsp; No. of Products in Each Category
+                    </button>
+                
+                    <span class="my-1 ms-4">
+                        <button type="button" class="btn btn-dark" onclick="loadPartialView('AdminDash', 'TotalSales')">
+                            &nbsp; Total sales per month
+                        </button>
+                    </span>
+                </div>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+            </div>
+            <div class="adminSidebar rounded-4 ps-2">
+                <h5 class="H4Admin"><i class="fa fa-angle-double-right px-2"></i> Products</h5>
+                <div class="my-1 ms-4">
+                    <button type="button" class="btn btn-dark" onclick="loadPartialView('Products', 'Create')">
+                        &nbsp; Add New Product
+                    </button>
+                    <span class="my-1 ms-4">
+                        <button type="button" class="btn btn-dark" onclick="loadPartialView('Products', 'Delete')">
+                            &nbsp; Delete Product
+                        </button>
+                    </span>
+                </div>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+            </div>
+            <div class="adminSidebar rounded-4 ps-2">
+                <h5 class="H4Admin"><i class="fa fa-angle-double-right px-2"></i> Categories</h5>
+                <div class="my-1 ms-4">
+                    <button type="button" class="btn btn-dark" onclick="loadPartialView('Products', 'CreateCategory')">
+                        &nbsp; Add New Category
+                    </button>
+                </div>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+            </div>
+            <div class="adminSidebar rounded-4 ps-2">
+                <h5 class="H4Admin"><i class="fa fa-angle-double-right px-2"></i> Messages</h5>
+                <div class="my-1 ms-4">
+                    <button type="button" class="btn btn-dark" onclick="loadPartialView('AdminDash', 'SendMessage')">
+                        &nbsp; Send Messages
+                    </button>
+                    <span class="my-1 ms-4">
+                        <button type="button" class="btn btn-dark" onclick="loadPartialView('AdminDash', 'ReplayMessage')">
+                            &nbsp; Messages replies
+                        </button>
+                    </span>
+                </div>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+            </div>
+            <div class="adminSidebar rounded-4 ps-2">
+                <h5 class="H4Admin"><i class="fa fa-angle-double-right px-2"></i> Tickets</h5>
+                <div class="my-1 ms-4">
+                    <button type="button" class="btn btn-dark" onclick="loadPartialView('AdminDash', 'TicketUpdate')">
+                        &nbsp; Update/replay Ticket
+                    </button>
+                    <span class="my-1 ms-4">
+                        <button type="button" class="btn btn-dark" onclick="loadPartialView('AdminDash', 'TicketStatus')">
+                            &nbsp; Close Ticket
+                        </button>
+                    </span>
+                </div>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+            </div>
+        </div>
+        <div id="ShowContainer" class="my-4"></div>
+    </div>
+</section>
+
+<script>
+    function loadPartialView(controller, action) {
+        $.ajax({
+            url: '/' + controller + '/' + action,
+            method: 'GET',
+            success: function (data) {
+                $('#ShowContainer').html(data);
+                scrollToShowContainer();
+            },
+            error: function () {
+                $('#ShowContainer').html('<p>Failed to load data!</p>');
+            }
+        });
+    }
+    function scrollToShowContainer() {
+        $('html, body').animate({
+            scrollTop: $('#ShowContainer').offset().top
+        }, 'slow');
+    }
+</script>

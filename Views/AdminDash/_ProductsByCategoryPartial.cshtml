@@ -1,0 +1,73 @@
+﻿@{
+    var chartData = ViewBag.ChartData;
+}
+
+<div class="border p-3 mt-5 bg-light w-75 mx-auto">
+    <div class="row pb-2">
+        <h2 class="text-black">No. of Products in each Category</h2>
+        <hr />
+    </div>
+    
+    <div class="">
+        <canvas id="productsByCategoryChart" width="400" height="150"></canvas>
+    </div>
+    
+    <div class="d-flex justify-content-end mt-4">
+        <a asp-controller="AdminDash" asp-action="index" class="btnClass5 btn-sm">
+            Back to AdminDashBoard <i class="fa fa-angle-double-right"></i>
+        </a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Define chartData first
+    var chartData = '@Html.Raw(chartData)';
+
+    if (chartData) {
+        // Parse chartData if it exists
+        var chartDataParsed = JSON.parse(chartData);
+
+        // Rest of the chart rendering logic
+        var ctx = document.getElementById('productsByCategoryChart').getContext('2d');
+
+        var labels = chartDataParsed.map(function (item) {
+            return item.CategoryName;
+        });
+
+        var data = chartDataParsed.map(function (item) {
+            return item.Count;
+        });
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Product Count',
+                    data: data,
+                    backgroundColor: 'rgba(229, 159, 132, 0.4)',
+                    borderColor: 'rgb(229, 159, 132)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            callback: function (value) {
+                                if (Number.isInteger(value)) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    } else {
+        console.log('No chart data available.');
+    }
+</script>

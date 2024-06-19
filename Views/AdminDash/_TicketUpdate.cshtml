@@ -1,0 +1,48 @@
+﻿<div class="border p-3 mt-5 bg-light w-75 mx-auto">
+    <div class="row pb-2">
+        <h2 class="text-black">Update/replay Ticket</h2>
+        <hr />
+    </div>
+    <div class="text-start">
+        <h4 class="mb-3">Enter Ticket Number</h4>
+        <form id="getSelectedTicketForm" asp-controller="AdminDash" asp-action="GetSelectedTicket" method="post">
+            <div class="form-group ms-5">
+                <label for="ticketNumber">Ticket Number:</label>
+                <input type="number" class="form-control w-25" id="ticketNumber" name="itemId" required>
+            </div>
+            <button type="submit" class="btnClass5 ms-5 my-3">Get Detail <i class="fa fa-angle-double-right px-2"></i></button>
+        </form>
+    </div>
+        <div class="d-flex justify-content-end text-end">
+            <a asp-controller="AdminDash" asp-action="index" class="btnClass5 btn-sm">
+                Back to AdminDashBoard <i class="fa fa-angle-double-right"></i>
+            </a>
+        </div>
+
+        <!-- Display partial view here -->
+        <div id="TicketToShow" class="mt-3">
+        </div>
+</div>
+    <script>
+        $(function () {
+            $('#getSelectedTicketForm').submit(function (e) {
+                e.preventDefault(); // prevent the form from submitting normally
+
+                var form = $(this);
+                var url = form.attr('action');
+                var formData = form.serialize(); // serialize the form data
+
+                $.post(url, formData)
+                    .done(function (data) {
+                        // Update the partial view with the received model data
+                        $('#TicketToShow').html(data);
+                    })
+                    .fail(function () {
+                        alert('An error occurred while processing your request.');
+                    });
+            });
+        });
+    </script>
+
+
+

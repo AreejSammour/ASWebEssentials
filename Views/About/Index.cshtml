@@ -1,0 +1,65 @@
+﻿@model List<ASWebEssentials.Models.Feature>
+@{
+    var random = new Random();
+    var shuffledModel = Model.OrderBy(x => random.Next()).ToList();
+}
+
+<header class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-warning">
+            <h1 class="HeadingH1">About Us</h1>
+            <p class="ParagraphP w-100">Welcome to AS Web Essentials, where innovation meets excellence in the world of web development. Established with a passion for creating digital experiences that transcend the ordinary, we take pride in being pioneers in the ever-evolving landscape of the internet.</p>
+        </div>
+    </div>
+</header>
+
+<div class="FeatCon1 mx-auto">
+    <div class="row p-1 m-1 align-items-center justifty-content-center RevDir1">
+        <div class="col-md-6 divW1">
+            <h1 class="HeadingH6">Our Vision</h1>
+            <p class="ParagraphP w-100 PWID">At AS Web Essentials, we envision a digital future where creativity and technology harmoniously blend to redefine online possibilities. Our mission is to lead the way in web development, delivering cutting-edge solutions that elevate businesses and organizations to new heights.</p>
+        </div>
+        <div class="col-md-6 divW2">
+            <img id="mainImage" class="w-100 h-100" src="../../images/about.jpg" alt="Service image" />
+        </div>
+    </div>
+</div>
+
+
+
+<section id="services" class="Con4 py-5 h-auto">
+
+    <h3 class="HeadingH2 mx-auto mb-5">What Sets Us Apart</h3>
+    @foreach (var item in shuffledModel.Take(5))
+    {
+        <div class="align-items-start justify-content-center FeatItem2 ">
+            <div class="d-flex flex-column justify-content-start">
+                <h3 class="HeadingH4">@item.Name</h3>
+                <p class="ParagraphP3">@item.Description</p>
+            </div>
+        </div>
+    }
+    <div class="align-items-end justify-content-end FeatItem2 bg-white">
+        <a class="btnClass2  mt-3" href="@Url.Action("Index", "Services")">More about our services</a>
+    </div>
+</section>
+
+<section id="services" class="Con3 py-5">
+
+    <h1 class="HeadingH2">Join Us on the Digital Journey</h1>
+
+    <div class="container px-4 px-lg-5 my-5 me-auto">
+        <div class="row align-items-center justify-content-center RevDir">
+            <div class="col-md-6 d-flex flex-column justify-content-start">
+                <p class="lead text-dark text-start">As we navigate the digital frontier, we invite you to join us on this exciting journey. Whether you're a startup looking to establish your online presence or an established business seeking a digital transformation, AS Web Essentials is here to turn your vision into reality.</p>
+                <p class="lead text-dark text-start">Discover the power of innovation, excellence, and collaboration with AS Web Essentials. Let's shape the future of the web together.</p>
+                <Button class="btnClass2 align-self-start" onclick="window.location.href='@Url.Action("Index", "Contact", new { id = @Model[0].Id})'">
+                    Contact Us <i class="fa fa-angle-double-right"></i>
+                </Button>
+            </div>
+            <div class="col-md-5">
+                <img id="mainImage" class="card-img-top mb-5 mb-md-0" src="../../images/contact.jpg" alt="Contact image" />
+            </div>
+        </div>
+    </div>
+</section>

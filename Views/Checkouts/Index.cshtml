@@ -1,0 +1,139 @@
+﻿@using ASWebEssentials.Models.CartModels
+@using ASWebEssentials.ViewModels
+@model CheckoutVM;
+
+<section class="py-5 mt-5 bg-light">
+
+    <div class="container">
+        <ol class="breadcrumb m-4">
+            <li class="breadcrumb-item text-secondary">Cart</li>
+            <li class="breadcrumb-item fw-bold ">Place Order</li>
+            <li class="breadcrumb-item text-secondary">Pay</li>
+            <li class="breadcrumb-item text-secondary">Order Complete</li>
+        </ol>
+        <div class="m-5">
+            <h5>User Information</h5>
+            <p class="mx-5  ParagraphP3">Name: @Model.UserName</p>
+            <p class="mx-5  ParagraphP3">Email: @Model.Email</p>
+            <p class="mx-5  ParagraphP3">Address: @Model.Address</p>
+        </div>
+        <div class="row">
+            <div class="col-xl-9">
+                <h3>Order Details</h3>
+                <div class="card-body p-2 pt-4">
+                    <div class="table-responsive">
+                    <table class="table mb-0">
+                        <tbody>
+                            <tr>
+                                <th width="10%" class="text-center">Image</th>
+                                <th width="40%" >Item Name</th>
+                                <th width="15%" class="text-center">Quantity</th>
+                                <th width="10%" class="text-center">Total Item Price</th>
+                            </tr>
+                            @if (Model.CartVMList != null && Model.CartVMList.Count > 0)
+                            {
+                               @foreach (CartVM item in Model.CartVMList)
+                               {
+                                  <tr class="bg-light">
+                                      <td width="10%" class="text-center"><img src="@item.Image" alt="" class="avatar-lg rounded"></td>
+                                      <td width="40%">
+                                          <h5>@item.ProdName</h5>
+                                          <p>Selected Option: @item.Name</p>
+                                      </td>
+                                      <td width="15%" class="text-center">
+                                                <div class="d-inline-flex">
+                                                    <select class="form-select form-select-sm w-m quantity-select" data-item-id="@item.Quantity">
+                                                        @for (int i = 1; i <= 8; i++)
+                                                        {
+                                                            if (item.Quantity == i)
+                                                            {
+                                                                <option value="@i" selected>@i</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    <button class="btn btn-light p-1 mx-2"
+                                                            type="submit" onclick="updateQuantity('@item.CartItemId', this.parentNode.querySelector('.quantity-select').value)">
+                                                        Update
+                                                    </button>
+                                                </div>
+                                      </td>
+                                      <td width="10%" class="text-center">@item.TotalItemPrice</td>
+                                  </tr>
+                               }
+                            }
+                                
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                <div class="mt-5">
+                    @await Html.PartialAsync("_PaymentMethodPartial", @Model.PaymentCard)
+                </div>
+            </div>
+
+            <div class="col-xl-3 mt-5 mt-lg-0">
+                <div class="card border shadow-none">
+                    <div class="card-header bg-transparent border-bottom py-3 px-4">
+                        <h5 class="font-size-16 mb-0">Order Summary </h5>
+                    </div>
+                    <div class="card-body p-4 pt-2">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Number of Items:</td>
+                                        <td class="text-end">@Model.TotalItems</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <th>Total Price:</th>
+                                        <td class="text-end">
+                                            <span class="fw-bold">
+                                                @Model.TotalPrice
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-end my-4">
+                        <a asp-controller="Orders" asp-action="ConfirmOrder" asp-route-UserName="@Model.UserName"
+                           asp-route-TotalPrice="@Model.TotalPrice" 
+                           id="checkoutButton" class="btnClass3">
+                            Confirm Order <i class="fa fa-angle-double-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="text-end my-3">
+                        <a asp-controller="Products" asp-action="Index" class="btnClass4">
+                            <span><i class="fa fa-angle-double-left"></i> Back to STORE</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+
+@section Scripts {
+    <script>
+        function updateQuantity(itemId, newQuantity) {
+            var parsedItemId = parseInt(itemId);
+            var parsedNewQuantity = parseInt(newQuantity);
+
+            var url = '@Url.Action("UpdateQuantity", "Checkouts")'
+                + '?itemId=' + parsedItemId
+                + '&newQuantity=' + parsedNewQuantity;
+
+            window.location.href = url;
+        }
+        </script>
+}

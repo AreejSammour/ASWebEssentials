@@ -1,0 +1,65 @@
+﻿@using ASWebEssentials.Models.OrderModels;
+@model OrderItem;
+
+<section class="py-5 mt-5 bg-light">
+	<div class="container">
+		<ol class="breadcrumb m-4">
+			<li class="breadcrumb-item text-secondary">Cart</li>
+			<li class="breadcrumb-item text-secondary ">Place Order</li>
+			<li class="breadcrumb-item fw-bold">Pay</li>
+			<li class="breadcrumb-item text-secondary">Order Complete</li>
+		</ol>
+		
+        <div class="Con1 bg-transparent h-100">
+            <div class="card border shadow-none ConfCard">
+                <div class="card-header border-bottom py-3 px-4 bg-black">
+                    <img class="keyClass2" src="../../images/correct.png" alt="Key-image" />
+                    <h1 class="HeadingH1">Thanks for your order</h1>
+                </div>
+                <div class="card-body p-4 pt-2">
+                    <div class="Con3 mt-3">
+                        <h3 class="HeadingH4 p-2">Payment Successful</h3>
+                        <p class="ParagraphP3">
+                            We have started working on your order straightway. You will soon receive an order confirmation via email 
+                            <span class="text-danger">@Model.Cart?.User?.Email</span>.
+                            Our team will contact you to review the required details soon.
+                        </p>
+                        <table class="table w-75">
+                            <tbody>
+                                <tr class="bg-light">
+                                    <th class="text-start">Order Id:</th>
+                                    <td class="text-center"><span class="fw-bold">@Model.OrderItemId</span></td>
+                                </tr>
+                                <tr class="bg-light">
+                                    <th class="text-start">Total Price:</th>
+                                    <td class="text-center">
+                                        <span class="fw-bold">$ 
+                                            @Model.Cart?.TotalPrice
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="bg-light">
+                                    <th class="text-start">Order date:</th>
+                                    <td class="text-center">
+                                        <span class="fw-bold">
+                                            @Model.PlacedDate
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-3">
+                <a asp-controller="Orders" asp-action="Details" asp-route-OrderAS="@Model.OrderItemId"
+                   asp-route-TotalPrice=""
+                   id="checkoutButton" class="btnClass2">
+                    Order Detail <i class="fa fa-angle-double-right"></i>
+                </a>
+            </div>
+
+        </div>
+	</div>
+</section>

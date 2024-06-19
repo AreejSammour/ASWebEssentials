@@ -1,0 +1,49 @@
+﻿@using ASWebEssentials.Models ;
+@model List<Services> ;
+
+<header class=" py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-warning">
+            <h1 class="HeadingH1">Our Services</h1>
+            <p class="ParagraphP w-100">Revolutionize your digital journey with our comprehensive suite of web development solutions. From captivating web design to seamless e-commerce experiences and innovative custom software tailored to your unique needs – we empower your business to thrive in the digital era, setting you apart from the competition.</p>
+        </div>
+    </div>
+</header>
+
+<section id="services" class="services py-5 mt-4 ">
+    <div class="container" data-aos="fade-up">
+        <div class="row gy-5">
+
+            @foreach (var services in Model)
+            {
+                <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="service-item">
+                        <div class="img">
+                            <img src="@services.Image" class="img-fluid" alt="">
+                        </div>
+                        <div class="details position-relative bg-light">
+                            <div class="icon">
+                                <i class="bi bi-activity"></i>
+                            </div>
+                            <a asp-controller="Services" asp-action="Details" asp-route-id="@services.Id" class="stretched-link">
+                                <h3>@services.Name</h3>
+                            </a>
+                            <p class="text-start">@services.Descr1</p>
+                            <p class="text-start">@services.Descr2</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <div id="services" class="Con7 py-5 mt-5 rounded-4">
+
+            <h2 class="HeadingH2">Complete your online presence with important and supportive tools</h2>
+            <p class="ParagraphP3 mt-3">
+                Our web Complementary store offers you a wide range of choices
+            </p>
+            <a class="btnClass2 mt-5" href="@Url.Action("Index", "Products")">Visit Our Complementary Store</a>
+
+        </div>
+    </div>
+</section>

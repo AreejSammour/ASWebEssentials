@@ -1,0 +1,78 @@
+﻿@using ASWebEssentials.ViewModels;
+@model OrderPaymentVM;
+
+
+<section class="Con1 bg-light h-auto">
+    <h2 class="HeadingH2 mt-5 pt-5">Order Detail </h2>
+    <h5 class="HeadingH5"># @Model.OrderItem?.OrderItemId</h5>
+    <div class="row FeatCon2 mt-5">
+        <div class="col-4 text-start">
+            <h6 class="ParagraphP5"><span class="text-dark"><b>Date:</b></span> @Model.OrderItem?.PlacedDate.ToString("ddd MM/dd/yyyy hh:mm tt")</h6>
+            <h6 class="ParagraphP5"><span class="text-dark"><b>Sub-Total:</b></span> $ @Model.OrderItem?.Cart!.TotalPrice</h6>
+        </div>
+        <div class="col-4 text-end">
+            <h6 class="ParagraphP5"><span class="text-dark"><b>Ordered by:</b></span> @Model.OrderItem?.Cart!.User!.UserName</h6>
+            <h6 class="ParagraphP5"><span class="text-dark"><b>Email:</b></span> @Model.OrderItem?.Cart!.User!.Email</h6>
+        </div>
+    </div>
+    
+    <div class="FeatItem3 h-auto">
+        <h5 class="text-dark my-3 ps-2">
+            Order Items ... <span class="ParagraphP4">@Model.OrderItem?.Status</span>
+        </h5>
+
+        <div class="wrapper bg-white">
+            <div class="table-responsive">
+                <table class="table w-75 m-auto mt-3">
+                    <thead class="table ">
+                        <tr class="text-uppercase text-center ParagraphP5">
+                            <th class="col-8">products</th>
+                            <th class="col-2">Quantity</th>
+                            <th class="col-2">total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderItem?.Cart?.Items!)
+                        {
+                            var matchingOption = item.Product?.Options?.FirstOrDefault(option => option.OptionName == item.Name);
+                            if (matchingOption != null)
+                            {
+                                <tr class="text-center">
+                                    <td class="col-8 ms-4 d-inline-flex justify-content-between">
+                                        <img src="@matchingOption.ImageUrl" class="avatar-lg rounded w-25" />
+                                        <div class="w-50 text-start">
+                                            <p class="ParagraphP1">@item.Product!.ProdName</p>
+                                            <p class="ParagraphP5">@item.Name</p>
+                                        </div>
+                                    </td>
+                                    <td class="col-2 p-4">@item.Quantity</td>
+                                    <td class="col-2 text-danger p-4"><b>@item.QuantPrice</b></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="FeatItem4">
+                <div class="mx-1">
+                    <img id="mainImage" class="small-image" src="../../images/mastercard.png" alt="Card image" />
+                </div>
+                <div class="ParagraphP5 mt-4">
+                    <p><span>Card Holder Name .. <strong>@Model.PaymentCard?.CardHolderName </strong></span></p>
+                    <p>
+                        <span>Card ends with &bull;&bull;&bull;&bull; </span>
+                        <strong>@Model.PaymentCard?.CardNumber?.Substring(Model.PaymentCard.CardNumber.Length - 4)</strong>
+                    </p>
+
+                </div>
+            </div>
+            <div class="text-end m-5">
+                <a class="btnClass4" asp-controller="Orders" asp-action="Index">
+                    Orders History List <i class="fa fa-angle-double-right"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>

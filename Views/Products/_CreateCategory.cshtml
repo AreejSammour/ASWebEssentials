@@ -1,0 +1,32 @@
+﻿@using ASWebEssentials.Models.ProductModels;
+@model Category;
+
+<form asp-controller="Products" asp-action="CreateCategory" method="post">
+    <div class="border p-3 mt-5 bg-light w-75 mx-auto">
+        <div class="row pb-2">
+            <h2 class="text-black">Add new Category</h2>
+            <hr />
+        </div>
+        <div class="d-flex justify-content-end">
+            <a asp-controller="AdminDash" asp-action="index" class="btnClass5 btn-sm">
+                Back to AdminDashBoard <i class="fa fa-angle-double-right"></i>
+            </a>
+        </div>
+        <div class="input-group mb-3">
+            <div class="w-100 text-start">
+                <h5>Available Categories:</h5>
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <p class="ParagraphP1">@cat.CatName</p>
+                }
+            </div>
+        </div>
+
+        <div class="mb-3 text-dark w-50">
+            <h6>New Category Name:</h6>
+            <input asp-for="CatName" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-warning">Add Category</button>
+    </div>
+</form>

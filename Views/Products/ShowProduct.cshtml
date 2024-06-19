@@ -1,0 +1,149 @@
+﻿@using ASWebEssentials.ViewModels;
+@model ProdCatVM ;
+@{
+    ViewData["Title"] = "Product-Detail";
+}
+
+<!-- Product section-->
+<section class="py-5 mt-4 bg-light">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center RevDir2">
+            <div class="col-md-6">
+                <!-- Main image -->
+                <img id="mainImage" class="card-img-top mb-5 mb-md-0 imgSize" src="@Model.Product?.ImageUrl" alt="Product image" />
+            </div>
+            <div class="col-md-6">
+                <h1 class="HeadingH1 text-black fw-bolder">@Model.Product?.ProdName</h1>
+
+                <p class="lead text-dark">@Model.Product?.ShortDesc</p>
+                <h4 class="mainName"></h4>
+                <div class="fs-5 mb-3 text-danger font-weight-bold">
+                    <span id="mainPrice">$ @Model.Product?.Options?[0]?.Price</span>
+                </div>
+
+                <div>
+                    <label for="exampleSelect1" class="form-label mt-4">Select option</label>
+                    <select class="form-select w-50 mb-3" id="exampleSelect1">
+                        <option value="OptionName" data-price="@Model.Product?.Options?[0]?.Price" data-image-url="@Model.Product?.ImageUrl">Select..</option>
+                        @foreach (var item in Model.Product?.Options!)
+                        {
+                            <option value="@item.OptionName" 
+                                            data-price="@item.Price" 
+                                            data-image-url="@item.ImageUrl"
+                                            data-option-name="@item.OptionName"
+                                            data-option-desc="@item.OptDesc">@item.OptionName</option>
+                        }
+                    </select>
+                    <input type="hidden" id="selectedOption" name="selectedOption" value="selectedOption" />
+                    <input type="hidden" id="productId" name="productId" value="@Model.Product.Id" />
+                    
+                    <label for="quantity" class="px-2 mb-0">Quantity:</label>
+                    <select class="form-select w-auto mb-3" id="quantity">
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    
+                    <button class="btnClass2 mb-3"
+                       onclick="addToCart()">
+                        Add to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container w-75 mt-4">
+        <h4 class="mt-5">Details</h4>
+        <p class="w-100 mt-4 px-4">@Model.Product?.DetailDesc</p>
+        <h4 class="mt-5">Features</h4>
+        @foreach (var item in @Model.Product!.Features!)
+        {
+            <p class="w-100 mt-4 px-4">- @item</p>
+        }
+        
+        <h4 class="text-warning">Option Detail ..</h4>
+        <p class="w-100 mt-4 px-4" id="OptionDesc">Choose Option ..</p>
+    </div>
+</section>
+
+<section class="py-5 bg-light opacity-75">
+    <div class="container px-4 px-lg-5 mt-2">
+        <h2 class="fw-bolder mb-4">Related products</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @if (Model.Category?.Products != null)
+            {
+                @foreach (var item in Model.Category.Products)
+                {
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="@item.ImageUrl" alt="altImg" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder HeadingH5 H5Update">@item.ProdName</h5>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <a class="btn btn-outline-dark mt-auto"
+                                       href="@Url.Action("ShowProduct", "Products", new { id = item.Id, catName = Model.Category.CatName  })">View options</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</section>
+
+
+@section scripts {
+    <script>
+        document.getElementById('exampleSelect1').addEventListener('change', function () {
+            var selectedIndex = this.selectedIndex;
+            var selectedOption = this.options[selectedIndex];
+            var optionName = selectedOption.getAttribute('data-option-name');
+            var price = selectedOption.getAttribute('data-price');
+            var imageUrl = selectedOption.getAttribute('data-image-url');
+            var optionDesc = selectedOption.getAttribute('data-option-desc');
+
+            if (optionName === "Select..") {
+                optionName = '@Model.Product?.ProdName';
+                price = '@Model.Product?.Options?[0]?.Price';
+                imageUrl = '@Model.Product?.ImageUrl';
+            }
+
+            document.getElementById('selectedOption').value = optionName + '|' + price;
+            console.log(optionName);
+            document.querySelector('h4.mainName').textContent = optionName;
+            document.getElementById('mainImage').src = imageUrl;
+            document.getElementById('mainPrice').textContent = '$ ' + price;
+            document.getElementById('OptionDesc').textContent = optionDesc;
+        });
+    </script>
+    <script>
+        function addToCart() {
+            var selectedOption = document.getElementById('exampleSelect1').value;
+            if (selectedOption === "OptionName") {
+                alert("Please select an option.");
+                return; // Stop further execution of the function
+            }
+            var productId = parseInt(document.getElementById('productId').value);
+            
+            var quantity = parseInt(document.getElementById('quantity').value);
+
+            var url = '@Url.Action("AddToCart", "Cart")'
+                + '?selectedOption=' + selectedOption
+                + '&productId=' + productId
+                + '&quantity=' + quantity;
+
+            window.location.href = url;
+        }
+    </script>
+}
+

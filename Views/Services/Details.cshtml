@@ -1,0 +1,118 @@
+﻿@using ASWebEssentials.Models;
+@model Services;
+@{
+    ViewData["Title"] = "Service-Detail";
+}
+
+<section class="py-5 mt-4 bg-light">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center Rev">
+            <div class="col-md-6 HSize">
+                <img id="mainImage" class="card-img-top mb-5 mb-md-0" src="@Model.Image" alt="Service image" />
+            </div>
+            <div class="col-md-6  HSize">
+                <h1 class="HeadingH1 text-black">@Model.Name</h1>
+                <p class="lead text-dark">@Model.Service.Description</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mt-3">
+        <div class="card">
+            <div class="KeyOfferingsClass">
+                 <a class="btn">
+                     <span class="HeadingH2">Key Offerings</span>
+                     <img class="keyClass" src="../../images/key.png" alt="Key-image" />
+                 </a>
+            </div>
+            <div>  
+                <div class="keyPardiv" style="border-radius:15px">
+                    @foreach (var offering in Model.Service.KeyOfferings)
+                    {
+                        string[] parts = offering.Split(':');
+                        string boldText = parts[0];
+                        string normalText = parts[1];
+                        <p class="ParagraphP1"><strong style="color:#c86d39; font-size:1.3rem">@boldText.Trim()</strong>: @normalText.Trim()</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="card">
+            <div class="KeyOfferingsClass1">
+                <a class="btn">
+                    <span class="HeadingH2">Why Choose Us</span>
+                    <img class="keyClass" src="../../images/decision-making.png" alt="Key-image" />
+                </a>
+            </div>
+            <div id="services" class="Con2">
+                <div class="FeatCon1" style="border-radius:15px">
+                    @foreach (var why in Model.Service.WhyChooseUs)
+                    {
+                        string[] parts = why.Split(':');
+                        string boldText = parts[0];
+                        string normalText = parts[1];
+                        <p class="FeatItem1"><strong style="font-size:1.3rem">@boldText.Trim()</strong>: @normalText.Trim()</p>
+                        
+                    }
+                </div>
+            </div>
+          
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="card">
+            <div class="KeyOfferingsClass">
+                <a class="btn">
+                    <span class="HeadingH2">Our Process</span>
+                    <img class="keyClass" src="../../images/process.png" alt="Key-image" />
+                </a>
+            </div>
+            
+            <div class="keyPardiv">
+                <div class="row justify-content-center">
+                    <div class="divW3">
+                        <ul class="timeline">
+                            @foreach (var process in Model.Service.OurProcess)
+                            {
+                                string[] parts = process.Split(':');
+                                string boldText = parts[0];
+                                string normalText = parts[1];
+                                <li>
+                                    <p><strong style="color:#c86d39; font-size:1.3rem">@boldText.Trim()</strong>: @normalText.Trim()</p>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-4">
+                <img id="mainImage" class="card-img-top mb-5 mb-md-0" src="../../images/keepInTouch.jpg" alt="Contact image" />
+            </div>
+            <div class="col-md-6">
+                <h3 class="HeadingH3">Get in Touch:</h3>
+                <p class="lead text-dark">@Model.Service.GetInTouch</p>
+                <Button class="btnClass2" onclick="window.location.href='@Url.Action("Index", "Contact")'">
+                    Contact Us <i class="fa fa-angle-double-right"></i>
+                </Button>
+            </div>
+        </div>
+        <div class="d-flex my-5">
+            <a class="btnClass4 align-self-end" href="@Url.Action("Index", "Services")">More about our services
+                <i class="fa fa-angle-double-right"></i>
+            </a>
+        </div>
+        
+    </div>
+
+     
+</section>

@@ -1,0 +1,31 @@
+﻿<div class="border p-3 mt-5 bg-light w-75 mx-auto">
+    
+    <div class="row pb-2">
+        <h2 class="text-black">Delete Product</h2>
+        <hr />
+    </div>
+    <div class="d-flex justify-content-end">
+        <a asp-controller="AdminDash" asp-action="index" class="btnClass5 btn-sm">
+            Back to AdminDashBoard <i class="fa fa-angle-double-right"></i>
+        </a>
+    </div>
+
+    @foreach (var Prod in Model)
+    {
+        <h6 class="HeadingH4">@Prod.ProdName</h6>
+        @foreach (var item in Prod.Options!)
+        {
+            <p class="ParagraphP5 ms-5 text-start">
+                #@item.Id @item.OptionName
+                <span>
+                    <a href="@Url.Action("DeleteOption", "Products", new { id = item.Id })" class="btn mx-2 p-2" onclick="return confirm('Are you sure you want to delete this option?');">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#c32148" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                        </svg>
+                    </a>
+                </span>
+            </p>
+        }
+    }
+
+</div>

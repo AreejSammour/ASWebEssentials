@@ -1,0 +1,95 @@
+﻿@using ASWebEssentials.Models.ProductModels
+@using ASWebEssentials.ViewModels;
+@model ProductCategoryVM;
+@{
+    ViewData["Title"] = "Products";
+}
+<section class="MainContainer">
+<header class=" py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-warning">
+            <h1 class="HeadingH1">Internet and technology supplies store</h1>
+            <p class="ParagraphP w-100">Everything your business needs to succeed and excel</p>
+        </div>
+    </div>
+</header>
+
+<div class="FeatCon1">
+        <div class="col-md-3 mt-4 divW1">
+            <section class="panel h-auto ">
+                <header class="ParagraphP4 ps-2 pt-2">
+                    Category
+                </header>
+                <div class="panel-body">
+                    <ul class="nav prod-cat">
+                        @if (Model.Categories != null)
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <li class="pt-3 pe-4">
+                                    <a href="" class="btnClass5 category-link" data-catid="@cat.Id" data-catname="@cat.CatName"><i class="fa fa-angle-double-right px-2"></i>@cat.CatName</a>
+                                 <ul class="nav  list-group">
+                                    @foreach (var prod in cat.Products!)
+                                    {
+                                        <li class="list-group-item bg-transparent border-0"><a href="" class="btnClass6 prod-link" data-prodid="@prod.Id" data-catname="@cat.CatName">@prod.ProdName</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-9 mt-5 prodRow">
+            <div class="row product-list px-4" id="product-list-container">
+            @await Html.PartialAsync("_ProductList", @Model.Products)
+        </div>
+    </div>
+</div>
+</section>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.category-link').click(function (e) {
+                e.preventDefault();
+
+                var catId = $(this).data('catid');
+
+                var catName = $(this).data('catname');
+
+                $.ajax({
+                    url: '/Products/UpdateProductList',
+                    type: 'GET',
+                    data: { catId: catId, catName: catName },
+                    success: function (response) {
+                        // Update the HTML content of the product list container
+                        $('#product-list-container').html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            $('.prod-link').click(function (e) {
+                e.preventDefault();
+
+                var prodId = $(this).data('prodid');
+
+                var catName = $(this).data('catname');
+
+                $.ajax({
+                    url: '/Products/UpdateProductList2',
+                    type: 'GET',
+                    data: { prodId: prodId, catName: catName },
+                    success: function (response) {
+                        // Update the HTML content of the product list container
+                        $('#product-list-container').html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+}

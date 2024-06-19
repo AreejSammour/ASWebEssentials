@@ -1,0 +1,66 @@
+﻿@using ASWebEssentials.Models.OrderModels;
+@model Orders;
+
+<section class="py-5 mt-5 bg-light">
+	<div class="Con3 bg-transparent h-100">
+        <div class="container mt-3 w-100">
+            <h2 class="HeadingH2">Orders history</h2>
+            <div class="text-start w-100 my-5 px-5">
+                <h5><span class="ParagraphP2">UserName:</span> @Model.User!.UserName</h5>
+                <h6><span class="ParagraphP2"> Email:</span> @Model.User!.Email</h6>
+            </div>
+
+            <table class="table table-striped m-auto" style="width:90%">
+                <thead>
+                    <tr>
+                        <th>Products</th>
+                        <th width="15%">Order Id</th>
+                        <th width="30%">Created At</th>
+                        <th width="10%">Total</th>
+                        <th width="10%">Quantity</th>
+                        <th width="15%">Status</th>
+                        <th width="15%">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (int i = Model.OrderItem!.Count - 1; i >= 0; i--)
+                    {
+                        var item = Model.OrderItem[i];
+                        var cartItem = item.Cart?.Items?.FirstOrDefault();
+                        if (cartItem != null)
+                        {
+                            var matchingOption = cartItem.Product?.Options?.FirstOrDefault(option => option.OptionName == cartItem.Name);
+                            if (matchingOption != null)
+                            {
+                                <tr style="font-size:12px;">
+            
+                                    <td><img src="@matchingOption.ImageUrl" class="avatar-lg rounded" /></td>
+                                    <td width="15%">@item.OrderItemId</td>
+                                    <td width="30%">@item.PlacedDate</td>
+                                    <td width="10%" class="text-danger"><strong>$ @item.Cart?.TotalPrice</strong></td>
+                                    <td width="10%">@item.Cart?.TotalQuantity</td>
+                                    <td width="15%">@item.Status</td>
+                                    <td width="15%">
+                                        <a asp-controller="Orders" asp-action="Details" asp-route-OrderAS="@item.OrderItemId" class="btnClass5">Detail..</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                   
+                </tbody>
+            </table>
+            @if (Model.OrderItem!.Count == 0 || Model.OrderItem!.Count == null)
+            {
+                <h3 class="HeadingH2 my-5">No previous Orders</h3>
+                <p class="ParagraphP5">Visit our store to choose the right services for your business</p>
+                <a class="btnClass2 mt-5" href="@Url.Action("Index", "Products")">
+                    Our Store <i class="fa fa-angle-double-right"></i>
+                </a>
+            }
+        </div>
+
+	</div>
+</section>
+

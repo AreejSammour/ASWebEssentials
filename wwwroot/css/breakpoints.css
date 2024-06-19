@@ -1,0 +1,374 @@
+﻿@media (max-width: 1199px) {
+    .divW3{
+        width:75%;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero_area {
+        min-height: auto;
+    }
+
+    .navbar-nav {
+        align-items: center;
+    }
+
+    .custom_nav-container .navbar-toggler {
+        margin-bottom: 15px;
+    }
+
+    .custom_nav-container.navbar-expand-lg .navbar-nav .nav-item .nav-link {
+        padding: 10px 25px;
+        margin: 5px 0;
+    }
+
+    .custom_nav-container.navbar-expand-lg .form-inline {
+        justify-content: center;
+    }
+
+    .custom_nav-container.navbar-expand-lg {
+        padding-top: 10px;
+        align-items: center;
+    }
+
+    .slider_section {
+        padding: 45px 0 150px 0;
+    }
+
+    .sub_page .custom_nav-container.navbar-expand-lg .navbar-nav .nav-item .nav-link {
+        padding-bottom: 15px;
+    }
+
+    .Con4 {
+        height: auto;
+        justify-content: center;
+    }
+
+    .FeatCon {
+        width: 90%;
+        margin: 10px 5px;
+        flex-wrap: wrap;
+    }
+
+    .FeatCon1 {
+        width: 100%;
+        margin: 5px;
+    }
+
+    .FeatItem {
+        width: 45%;
+        padding: 2px 5px;
+        margin: 10px auto;
+    }
+
+    .divW1{
+        width:60%;
+    }
+    .divW2 {
+        width: 40%;
+    }
+    .HSize{
+        width:100%;
+        text-align:center;
+    }
+    .Rev {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .Rev1 {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .HeadingH1 {
+        font-size: 45px;
+    }
+    .FeatItem4 {
+        width: 80%;
+        padding-left: 5px;
+        margin: 15px 10px 10px auto;
+    }
+    .fontNew{
+        font-size:10px;
+    }
+    .card1 {
+        min-width: 350px;
+    }
+    .ParagraphP4 {
+        font-size: 14px;
+    }
+    .adminSidebar {
+        width: 100%;
+        margin: 20px 3px;
+        padding: 3px;
+        font-size: 15px;
+    }
+    .H4Admin {
+        font-size: 18px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .slider_section ol.carousel-indicators {
+        justify-content: center;
+    }
+
+    .slider_section {
+        text-align: center;
+    }
+
+        .slider_section .img-box {
+            margin-top: 35px;
+        }
+
+        .slider_section .detail-box .btn-box {
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+    .about_section .heading_container {
+        margin-bottom: 0;
+    }
+
+    .about_section .row {
+        flex-direction: column-reverse;
+    }
+
+    .about_section .detail-box {
+        margin-left: 0;
+        width: 100%;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    .service_section .service_container {
+        flex-wrap: wrap;
+    }
+
+    .client_section .carousel_btn-box {
+        margin-top: 25px;
+    }
+
+    .client_section .carousel-control-prev,
+    .client_section .carousel-control-next {
+        position: unset;
+        transform: none;
+        margin: 0 2.5px;
+    }
+
+    .info_section .row .col-md-3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .info_section .info_logo {
+        align-items: center;
+    }
+
+    .info_section .info_form .social_box {
+        justify-content: center;
+    }
+
+        .info_section .info_form .social_box a {
+            margin: 0 5px;
+        }
+
+    .Container {
+        width: 100%;
+    }
+    .detail-box {
+        padding-left: 50px;
+    }
+    .HeadingH1 {
+        font-size: 40px;
+    }
+    .HeadingH2 {
+        font-size: 31px;
+    }
+
+    h4 {
+        font-size: 20px;
+    }
+    .circleClass{
+        margin-left: 20px;
+        margin-top: -18px;
+    }
+
+    .Con4 {
+        height: auto;
+        justify-content: center;
+    }
+
+    .FeatCon {
+        width: 100%;
+        margin: 10px 5px;
+    }
+
+    .FeatCon1 {
+        width: 100%;
+        display: inline-block;
+        justify-content: center;
+        margin:5px auto;
+        padding:5px
+    }
+
+    .FeatItem {
+        margin: 5px auto;
+        padding: 5px
+    }
+
+    .FeatItem1 {
+        margin: 10px auto;
+        width: 90%;
+    }
+
+    .FeatItem2 {
+        margin: 5px auto;
+        width: 80%;
+    }
+    #mainImage {
+        width: 70%;
+        margin: 10px;
+    }
+
+    .RevDir {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .RevDir1 {
+        display: flex;
+        flex-direction: column-reverse;
+        width:100%;
+        text-align:center;
+        margin:0px auto ;
+    }
+    .RevDir2 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        text-align: start;
+        margin: 0px auto;
+    }
+    .ParagraphP {
+        width: 70%;
+    }
+    .divW1 {
+        width: 100%;
+    }
+    .divW2 {
+        width: 100%;
+    }
+    .divW3 {
+        width: 100%;
+    }
+    .PWID {
+        margin: 0px auto;
+    }
+    .imgh{
+        width:100px;
+        height:100px;
+    }
+
+    .newWid {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+    .prodRow{
+        margin:5px auto;
+    }
+    .adtocart {
+        width: 40px;
+        height: 40px;
+        bottom: -20px;
+    }
+    .TCor{
+        text-align:start;
+    }
+    .imgDel{
+        width:60%;
+    }
+    .ConfCard {
+        width: 80%;
+    }
+    .FeatItem4 {
+        width: 90%;
+        padding: 5px;
+        margin: 10px auto;
+    }
+    .ParagraphP5 {
+        font-size: 14px;
+    }
+    .adminSidebar {
+        width: 50%;
+        font-size: 18px;
+    }
+    .circleClass2 {
+        width: 80px;
+        height: 80px;
+        border-radius:50%;
+        margin-top: -25px;
+    }
+    .FeedClass {
+        padding: 1px 20px 10px 20px;
+    }
+    .MINHEIGHT {
+        min-height: 450px;
+    }
+ 
+}
+
+@media (max-width: 576px) {
+    .header_top a span {
+        display: none;
+    }
+
+    .slider_section .detail-box h1 {
+        font-size: 2.5rem;
+        line-height: 55px;
+    }
+
+    .FeatItem {
+        width: 80%;
+    }
+    .FeatItem4 {
+        padding: 1px;
+        margin: 10px auto;
+    }
+
+    .ParagraphP {
+        width: 80%;
+    }
+
+    .HeadingH6 {
+        font-size: 30px;
+    }
+    .HeadingH5 {
+        font-size: 15px;
+    }
+    .ParagraphP5 {
+        font-size: 13px;
+        font-family: Poppins;
+    }
+    .ParagraphP2 {
+        font-size: 13px;
+        font-family: Poppins;
+        width: 85%;
+        margin: 20px auto;
+        text-align: center;
+    }
+    .adminSidebar {
+        width: 80%;
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container, .Con3 {
+        max-width: 1200px;
+    }
+    
+}

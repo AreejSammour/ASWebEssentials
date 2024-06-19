@@ -1,0 +1,82 @@
+﻿@using ASWebEssentials.Models.ContactModel;
+@model Ticket;
+
+@if (Model != null){
+<div class="card border-warning mb-3 w-100">
+        <div class="card-header justify-content-between d-flex ParagraphP5">
+        <span class="bg-dark text-light px-2"> @Model.UserName </span>
+        <span>Ticket # @Model.Id</span> 
+        <span>Status: @Model.Status</span>
+        <span> @Model.CreatedDate </span>
+    </div>
+    <div class="card-body">
+        @if (@Model.About == "1")
+        {
+            <h4 class="card-title">About: Website Design and Development</h4>
+        }
+        @if (@Model.About == "2")
+        {
+            <h4 class="card-title">About: E-Commerce Development</h4>
+        }
+        @if (@Model.About == "3")
+        {
+            <h4 class="card-title">About: Complementary Store</h4>
+        }
+        @if (@Model.About == "4")
+        {
+            <h4 class="card-title">About: Others</h4>
+        }
+        <p class="card-text mt-4"><strong>Question/inquiry: </strong>@Model.Quest</p>
+    </div>
+    
+    <div id="ticketDetails">
+        @if (Model.TicketRes.Any())
+        {
+            @await Html.PartialAsync("_TicketDetails", @Model)
+        }
+        else
+        {
+            <p class="ParagraphP4 ps-2">There are no replies</p>
+        }
+    </div>
+
+    <div class="card-footer">
+        @if (Model.Status == "open")
+        {
+            <div class="w-75 mx-auto">
+                <div class="form-group">
+                    <input type="hidden" id="ticketId" name="ticketId" value="@Model.Id" />
+                    <label for="reply">Reply:</label>
+                    <textarea class="form-control" id="reply" name="reply"></textarea>
+                </div>>
+                <button type="button" class="btn btnClass2 align-self-start my-2" id="submitResponseBtn">Submit</button>
+            </div>
+        }
+    </div>  
+</div>
+
+}
+
+<script>
+    $(document).ready(function () {
+        $('#submitResponseBtn').click(function () {
+            var ticketId = $('#ticketId').val();
+            var reply = $('#reply').val();
+
+            $.ajax({
+                url: '@Url.Action("SaveResponse", "Contact")',
+                type: 'POST',
+                data: { id: ticketId, reply: reply },
+                success: function (response) {
+                    $('#ticketDetails').html(response);
+                    $('#reply').val('');
+                    var newTicketResCount = parseInt($('#ticketDetails').find('.ticket-res').length);
+                    $('#ticketCount h1').text(newTicketResCount);
+                },
+                error: function () {
+                    alert('An error occurred while saving the response.');
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,29 @@
+﻿@model List<ASWebEssentials.Models.ProductModels.Product>
+
+<section id="services" class="Con7 py-5">
+
+    <h1 class="HeadingH2">Smart store complements your business</h1>
+    <p class="ParagraphP3 mt-3">
+        In AS Web Essentials, we provide all your company needs for success
+    </p>
+    <p class="ParagraphP3 mb-5">
+        Selected services according to what modern, successful companies need
+    </p>
+
+    <div class="FeatCon1 mt-4">
+        @foreach (var prod in Model)
+        {
+            <div class="FeatItem2  text-center circolor5">
+                <h4>@prod.ProdName</h4>
+                <img id="ProdImage" class="card-img-top mb-2 mb-md-0" src="@prod.ImageUrl" alt="Contact image" />
+                <a href="@Url.Action("ShowProduct", "Products", new { id = @prod.Options![0].ProductId, catname = @prod.Categories?[0].CatName })" class="pro-title">
+                    <span class="HeadingH4"> @prod.Options[0].OptionName </span>
+                    <p class="price text-danger">$ @prod.Options[0].Price</p>
+                </a>
+            </div>
+        }
+    </div>
+
+    <a class="btnClass2 mt-5" href="@Url.Action("Index", "Products")">Visit Our Complementary Store</a>
+
+</section>

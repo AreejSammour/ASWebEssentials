@@ -1,0 +1,95 @@
+﻿@using ASWebEssentials.Models.ContactModel;
+@model AdminMess;
+
+@if (Model != null){
+<div class="card border-warning mb-3 w-100">
+        <div class="card-header justify-content-between d-flex w-100 ParagraphP5">
+        <span class="bg-dark text-light px-2"> Admin </span>
+            <span >Message # @Model.Id</span>
+        <span>Status: @Model.Status</span>
+        <span> @Model.CreatedDate </span>
+    </div>
+    <div class="card-body">
+        @if (@Model.MessAbout == "1")
+        {
+            <h4 class="card-title">About: Website Design and Development</h4>
+        }
+            @if (@Model.MessAbout == "2")
+        {
+            <h4 class="card-title">About: E-Commerce Development</h4>
+        }
+            @if (@Model.MessAbout == "3")
+        {
+            <h4 class="card-title">About: Complementary Store</h4>
+        }
+            @if (@Model.MessAbout == "4")
+        {
+            <h4 class="card-title">About: Others</h4>
+        }
+        <p class="card-text mt-4"><strong>Message Body: </strong>@Model.MessBody</p>
+    </div>
+
+        <div class="card-footer">
+            <div class="w-75 mx-auto">
+                <div class="form-group text-start">
+                    <input type="hidden" id="messageId" name="messageId" value="@Model.Id" />
+                    <label for="reply">Reply:</label>
+                    <textarea class="form-control" id="reply" name="reply"></textarea>
+                </div>>
+                <button type="button" class="btnClass2 my-2" id="submitResponseBtn">Submit</button>
+            </div>
+        </div>
+
+        <div id="messageDetails">
+            @if (Model.MessageRes!.Any())
+            {
+                @await Html.PartialAsync("~/Views/Shared/AdminPartial/_MessageDetails.cshtml", @Model)
+            }
+            else
+            {
+                <p class="ParagraphP4 ps-2">There are no replies</p>
+            }
+        </div>
+
+        
+
+</div>
+
+}
+
+<script>
+    $(function () {
+        $('#submitResponseBtn').click(function () {
+            // Retrieve message ID and reply text
+            var messageId = $('#messageId').val();
+            var reply = $('#reply').val();
+            var isAdmin = $('#isAdmin').val(); // Assuming you have a hidden field indicating whether the user is an admin or not
+
+            // Determine the URL based on user's role
+            var url = isAdmin === 'True' ? '@Url.Action("MessResponse", "AdminDash")' : '@Url.Action("MessResponseSaving", "Contact")';
+
+            // Send AJAX request to the appropriate controller action
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: { id: messageId, reply: reply },
+                success: function (response) {
+                    $('#messageDetails').html(response);
+                    $('#reply').val('');
+
+                    // Update message count display based on content
+                    var newMessageResCount = $('#messageDetails').find('.card').length;
+                    if (newMessageResCount > 0) {
+                        $('#updatedmessageCount h1').text(newMessageResCount);
+                    } else {
+                        $('#updatedmessageCount h1').text("No replies");
+                    }
+                },
+                error: function () {
+                    alert('An error occurred while saving the response.');
+                }
+            });
+        });
+    });
+</script>
+

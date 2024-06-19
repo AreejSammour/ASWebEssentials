@@ -1,0 +1,197 @@
+﻿@model ASWebEssentials.Models.PaymentCard;
+<section>
+<h3>Payment Method</h3>
+
+@if (Model == null)
+{
+    <h5 class="m-4">No Saved payment method</h5>
+    <p class="ParagraphP1 mx-4">Choose payment method: </p>
+    <div class="FeatItem2">
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header">
+                    <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
+                        <img src="../../images/mastercard.png" alt="" class="" style="width: 30px; height: 30px;">
+                        <img src="../../images/visa.png" alt="" class="mx-1" style="width: 30px; height: 30px;">
+                        <span class="ParagraphP1 mx-1">Credit/Debit Card</span>
+                    </a>
+                </div>
+                <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                    <div class="card-body">
+                        <div class="card-body payment-card-body">
+                            <form method="post" action="/Checkouts/AddPaymentMethod">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="mb-1 w-75 my-2">
+                                    <label asp-for="CardHolderName" class="ParagraphP4">Card Holder Name</label>
+                                    <input asp-for="CardHolderName" class="form-control" type="text" required/>
+                                    <span asp-validation-for="CardHolderName" class="text-danger"></span>
+                                </div>
+                                <div class="row my-3">
+                                    <div class="col-6">
+                                        <i class="fa fa-credit-card"></i>
+                                        <label asp-for="CardNumber" class="ParagraphP4">Card Number</label>
+                                        <input asp-for="CardNumber" class="form-control" placeholder="0000 0000 0000 0000" type="text" maxlength="16" oninput="restrictInput(this, 16)" required>
+                                        <span asp-validation-for="CardNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <i class="fa fa-lock"></i>
+                                        <label asp-for="CVC" class="ParagraphP4"></label>
+                                        <input asp-for="CVC" class="form-control" type="text" maxlength="4" oninput="restrictInput(this, 4)" required>
+                                        <span asp-validation-for="CVC" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row my-4">
+                                    <div class="col-auto mt-2">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <div class="col-auto mt-2 ParagraphP4">
+                                        <label asp-for="MonthValid">Expiry Date</label>
+                                    </div>
+                                    <div class="col-3">
+                                        <input asp-for="MonthValid" class="form-control" placeholder="MM" type="text" maxlength="2" oninput="restrictInput(this, 2)" required />
+                                        <span asp-validation-for="MonthValid" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span style="font-size:30px"> / </span>
+                                    </div>
+                                    
+                                    <div class="col-3">
+                                        <input asp-for="YearValid" class="form-control" placeholder="YY" type="text" maxlength="2" oninput="restrictInput(this, 2)" required />
+                                        <span asp-validation-for="YearValid" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col align-items-center">
+                                    <div class="row">
+                                        <p class="text-muted certificate-text"><i class="fa fa-lock"></i> Your transaction is secured with ssl certificate</p>
+                                    </div>
+                                    <div class="row d-flex flex-row-reverse w-100">
+                                        <button type="submit" class="btnClass2 w-25">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
+                        <img src="../../images/paypal.png" alt="" class="mx-2" style="width: 30px; height: 30px;">
+                        <span class="ParagraphP1 mx-1">PayPal</span>
+                    </a>
+                </div>
+                <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                    <div class="card-body">
+                        <form >
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="text" class="form-control" style="background-color:#e7ecef" id="email" placeholder="Enter email" name="email">
+                                <label class="text-secondary" for="email">Enter your PayPal Email</label>
+                            </div>
+                            <div class="row d-flex flex-row-reverse w-100">
+                                <button type="submit" class="btnClass2 w-25 inactive-button" disabled>Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseThree">
+                        <img src="../../images/klarna.png" alt="" class="mx-2" style="width: 30px; height: 30px; background-color:#ffa3a3">
+                        <span class="ParagraphP1 mx-1">Klarna</span>
+                    </a>
+                </div>
+                <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row d-flex flex-row-reverse w-100">
+                            <button type="submit" class="btnClass2 w-50 inactive-button" disabled>Open Klarna App</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-3 imgDel">
+            <img id="mainImage" class="card-img-top mb-2 mb-md-0 " src="../../images/mastercard.png" alt="Contact image" />
+        </div>
+        <div class="col-md-6">
+            <h4 class="HeadingH4">Credit card details</h4>
+            <p class="lead text-dark">
+                <span>The card ends with &bull;&bull;&bull;&bull; </span>
+                <strong>@Model.CardNumber?.Substring(Model.CardNumber.Length - 4)</strong>
+            </p>
+                <script>
+                    function ChangeMethod(ItemId) {
+                        console.log(ItemId);
+                        var parsedItemId = parseInt(ItemId);
+
+                        var url = '@Url.Action("ChangePaymentMethod", "Checkouts")'
+                            + '?CardId=' + parsedItemId;
+
+                        window.location.href = url;
+                    }
+                </script>
+
+                <button type="button" class="btnClass5" id="ChangeMethod" onclick="ChangeMethod('@Model.Id')">
+                    <span style="font-size:15px; color:darkred;">Change Payment Method</span>
+                </button>
+                <span style="font-size:15px; color:#9f8d8d;">Note: Current card will be deleted</span>
+            </div>
+    </div>
+}
+</section>
+
+@section scripts {
+<script>
+    function restrictInput(input, maxLength) {
+        // Remove any non-numeric characters
+        input.value = input.value.replace(/[^\d]/g, '');
+
+        // Restrict input length
+        if (input.value.length > maxLength) {
+            input.value = input.value.slice(0, maxLength);
+        }
+
+        if (input.id === "CardNumber") {
+            // Ensure that the card number has exactly 16 digits
+            if (input.value.length !== 16) {
+                input.setCustomValidity("Card number must be 16 digits.");
+            } else {
+                input.setCustomValidity("");
+            }
+        }
+        if (input.id === "MonthValid") {
+            // Ensure that the month is in the range 1-12
+            const month = parseInt(input.value);
+            if (month < 1 || month > 12) {
+                input.setCustomValidity("Month must be between 1 and 12.");
+            } else {
+                input.setCustomValidity("");
+            }
+        }
+        if (input.id === "YearValid") {
+            // Ensure that the year is in the range 24-34
+            const year = parseInt(input.value);
+            if (year < 24 || year > 34) {
+                input.setCustomValidity("Year must be between 24 and 34.");
+            } else {
+                input.setCustomValidity("");
+            }
+        }
+        if (input.id === "CVC") {
+            // Ensure that the CVC has at least 3 digits
+            if (input.value.length < 3) {
+                input.setCustomValidity("CVC must be at least 3 digits.");
+            } else {
+                input.setCustomValidity("");
+            }
+        }
+    }
+</script>
+   
+
+}

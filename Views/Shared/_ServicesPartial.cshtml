@@ -1,0 +1,54 @@
+﻿@model List<ASWebEssentials.Models.Services>
+
+<section id="services" class="Con3 py-5">
+
+    <h1 class="HeadingH2">Comprehensive services for all needs</h1>
+
+    <div class="container px-4 px-lg-5 my-5 me-auto">
+        <div class="row align-items-center justify-content-center  RevDir">
+            <div class="col-md-6 d-flex flex-column justify-content-start "">
+                <h3 class="HeadingH3">@Model[0].Name</h3>
+                <p class="lead text-dark text-start">@Model[0].Descr1</p>
+                <p class="lead text-dark text-start">@Model[0].Descr2</p>
+                <Button class="btnClass2 align-self-start" onclick="window.location.href='@Url.Action("Details", "Services", new { id = @Model[0].Id})'">
+                    Learn more <i class="fa fa-angle-double-right"></i>
+                </Button>
+            </div>
+            <div class="col-md-4"">
+                <img id="mainImage" class="card-img-top mb-5 mb-md-0" src="@Model[0].Image" alt="Contact image" />
+            </div>
+        </div>
+    </div>
+
+    <div class="container px-4 px-lg-5 my-3 me-auto">
+        <div class="row align-items-center justify-content-center"> 
+            <div class="col-md-4 mx-4">
+                <img id="mainImage" class="card-img-top mb-5 mb-md-0" src="@Model[1].Image" alt="Contact image" />
+            </div>
+            <div class="col-md-6 d-flex flex-column justify-content-start">
+                <h3 class="HeadingH3">@Model[1].Name</h3>
+                <p class="lead text-dark text-start">@Model[1].Descr1</p>
+                <p class="lead text-dark text-start">@Model[1].Descr2</p>
+                <Button class="btnClass2 align-self-start" onclick="window.location.href='@Url.Action("Details", "Services", new { id = @Model[1].Id})'">
+                    Learn more <i class="fa fa-angle-double-right"></i>
+                </Button>
+            </div>
+        </div>
+    </div>
+</section>
+    <section id="services" class="Con3 py-5">
+    <div class="FeatCon">
+        @for (int i = 2; i < Model.Count && i < 6; i++)
+        {
+            <div class="FeatItem text-center pt-2 circolor5 justify-content-between">
+                <h6>@Model[i].Name</h6>
+                <button class="btnClass8 mx-auto"
+                    onclick="window.location.href='@Url.Action("Index", "Services", new { id = @Model[i].Id})'">Learn more
+                    <i class="fa fa-angle-double-right"></i>
+                </button>
+            </div>    
+        }
+    </div>
+
+    <a class="btnClass2  my-5" href="@Url.Action("Index", "Services")">More about our services</a>
+</section>

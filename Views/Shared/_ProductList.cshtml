@@ -1,0 +1,38 @@
+﻿@using ASWebEssentials.Models.ProductModels;
+@model List<Product>;
+@{
+    int x = 1;
+}
+
+<div class="row prodRow">
+    @if (Model != null)
+        @foreach (Product product in Model)
+        {
+            @if (product.Options != null)
+                @foreach (Option option in product.Options)
+                {
+                    <div class="col-md-4 newWid">
+                        <section class="panel">
+                            <div class="pro-img-box">
+                                <img src="@option.ImageUrl" alt="" class="imgh" />
+
+                                <a href="@Url.Action("AddToCartAsync", "Cart", new { selectedOption = @option.OptionName, productId = @option.ProductId, quantity = @x })"
+                                   class="adtocart">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                            </div>
+                            <div class="panel-body text-center">
+                                <div>
+                                    <a href="@Url.Action("ShowProduct", "Products", new { id = @option.ProductId, catname = @product.Categories?[0].CatName })" class="pro-title">
+                                        @option.OptionName
+                                        <p class="price">$ @option.Price</p>
+                                        <p></p>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                }
+        }
+
+</div>

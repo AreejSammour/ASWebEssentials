@@ -1,0 +1,27 @@
+﻿@using ASWebEssentials.Models.ContactModel;
+@model Ticket;
+
+
+    
+    <div class="">
+        @{
+            var sortedResponses = Model.TicketRes!.OrderByDescending(res => res.ResDate);
+        }
+
+        @foreach (var res in sortedResponses)
+        {
+        <div class="card border-warning my-3 w-75 mx-auto ParagraphP5">
+            <div class="card-header justify-content-between d-flex">
+                <span class="bg-dark text-light px-2"> @res.UserName </span>
+                <span> @res.ResDate </span>
+            </div>
+            <p class="ps-2 text-start" style="min-height:100px">
+                @res.RespText;
+            </p>
+        </div>
+        }
+    </div>
+
+
+
+

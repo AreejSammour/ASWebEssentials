@@ -1,0 +1,27 @@
+﻿@using ASWebEssentials.Models.ContactModel;
+@model AdminMess;
+
+
+    
+    <div class="">
+        @{
+            var sortedResponses = Model.MessageRes!.OrderByDescending(res => res.ResDate);
+        }
+
+        @foreach (var res in sortedResponses)
+        {
+        <div class="card border-warning my-3 w-75 mx-auto">
+            <div class="card-header justify-content-between d-flex ParagraphP5">
+                <span class="bg-dark text-light px-2"> @res.UserName </span>
+                <span> @res.ResDate </span>
+            </div>
+            <p class="ps-2 justify-content-start d-flex" style="min-height:100px">
+                @res.RespText;
+            </p>
+        </div>
+        }
+    </div>
+
+
+
+

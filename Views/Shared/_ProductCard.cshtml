@@ -1,0 +1,19 @@
+﻿@model Tuple<int, IEnumerable<ASWebEssentials.Models.ProductModels.Product>>
+
+@foreach (var item in Model.Item2)
+{
+    <div class="col mb-5">
+        <div class="card h-100">
+            <img class="card-img-top img-fluid img-thumbnail" src="@item.ImageUrl" alt="Product image" />
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <h5 class="fw-bolder">@item.ProdName</h5>
+                    $40.00 - $80.00
+                </div>
+            </div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-warning  mt-auto" href="#">More..</a></div>
+            </div>
+        </div>
+    </div>
+}

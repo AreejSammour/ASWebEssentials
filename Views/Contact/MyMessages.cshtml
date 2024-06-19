@@ -1,0 +1,70 @@
+﻿@using ASWebEssentials.Models.ContactModel;
+@model List<AdminMess>;
+
+<header class=" py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-warning">
+            <h1 class="HeadingH1">My Messages</h1>
+            <p class="ParagraphP w-100">Here are the general and private administration messages </p>
+        </div>
+    </div>
+</header>
+
+<div class="FeatCon1">
+    <div class="col-md-3 ms-5">
+        <section class="panel h-auto">
+            <header class="HeadingH7 py-3 ps-3 circolor1">
+                Messages
+            </header>
+            @if (Model.Count == 0)
+            {
+                <h5 class="ParagraphP4 ps-4">No messages</h5>
+            }
+            <div class="panel-body ps-2 pb-2">
+                @foreach (var mess in Model)
+                {
+                    <div class="ParagraphP4">
+                        <a href="#" class="btnClass5 message-link" data-id="@mess.Id">
+                            # @mess.Id
+                            <i class="fa fa-angle-double-right px-2"></i>
+                            <span class="ParagraphP4">@string.Join(" ", @mess.MessBody!.Split(' ').Take(3)) ...</span>
+                        </a>
+                    </div>
+                }
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-md-9 Con5">
+        <p class="ParagraphP1">Select the message</p>
+        <i class="fa fa-angle-double-left px-2"></i>
+        <i class="fa fa-angle-double-left px-2"></i>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.message-link').forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                var messageId = this.dataset.id; // Get the ID of the clicked message
+
+                // AJAX call to update partial view
+                $.ajax({
+                    url: '@Url.Action("SelectedMessageDetails", "Contact")',
+                    type: 'GET',
+                    data: { MId: messageId },
+                    success: function (data) {
+                        $('.Con5').html(data); // Update the content of .Con5 div
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
+

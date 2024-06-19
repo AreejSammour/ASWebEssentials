@@ -1,0 +1,40 @@
+﻿@using ASWebEssentials.ViewModels;
+@model ASWebEssentials.ViewModels.HomeVM
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@* hero_area *@
+<section class="bgImage Container">
+    <div class="detail-box">
+        <h1 class="HeadingH1">
+            Transforming Ideas<br>
+            <span>
+                into Digital Success
+            </span>
+        </h1>
+        <p class="ParagraphP">
+            At AS Web Essentials, we blend innovation, creativity, and technology to create exceptional digital experiences
+        </p>
+        <div class="btn-box mt-5">
+            <a asp-controller="Services" asp-action="Index" class="btnClass"> Learn more </a>
+        </div>
+    </div>
+</section>
+
+
+<div>
+    @await Html.PartialAsync("_FeaturesPartial", @Model.Features)
+</div>
+<div>
+    @await Html.PartialAsync("_ServicesPartial", @Model.Services)
+</div>
+
+<div>
+    @await Html.PartialAsync("_Complementary",@Model.Products)
+</div>
+
+<div>
+    @await Html.PartialAsync("_FeedBack")
+</div>

@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@using ASWebEssentials.Models.ContactModel;
+@model Ticket
+
+<header class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="text-center text-warning FeatItem5 my-0">
+            <h1 class="HeadingH1">Contact Us</h1>
+            <div class="row mt-5 justify-content-around">
+                <div class="col-4">
+                    <i class="fa fa fa-phone iconStyle circleClass1" style="font-size:30px"></i>
+                    <p class="ParagraphP4 mb-0">Phone:</p>
+                    <p class="ParagraphP3 mt-0 fontNew">0 712 141 618</p>
+                </div>
+                <div class="col-4">
+                    <i class="fa fa-map-marker iconStyle circleClass1" style="font-size:30px"></i>
+                    <p class="ParagraphP4 mb-0">Address:</p>
+                    <p class="ParagraphP3 mt-0 fontNew">Jönköping/Sweden</p>
+                </div>
+                <div class="col-4">
+                    <i class="fa fa-paper-plane iconStyle circleClass1" style="font-size:25px"></i>
+                    <p class="ParagraphP4 mb-0">E-mail:</p>
+                    <p class="ParagraphP3 mt-0 fontNew">Info@asWebEssentials.com</p>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center justify-content-center h-100 w-100 bg-black">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                <h1 class="HeadingH7 my-5">Get in touch with us</h1>
+                <div class="card1 w-100 ">
+                        <form asp-action="Contact" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="p-3 w-75">
+                                <input asp-for="FullName" class="form-control" placeholder="*Your full name.." required autofocus>
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+                            <div class="p-3 w-100">
+                                <input asp-for="Email" class="form-control" placeholder="*ex. abc@abc.com" required autocomplete="on">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="p-3 w-75">
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Phone/Mobile">
+                            </div>
+                            <div class="p-3 w-100">
+                                <select asp-for="About" class="form-control" required>
+                                    <option readonly value="-1">*The question is about..</option>
+                                    <option value="1">Website Design and Development</option>
+                                    <option value="2">E-Commerce Development</option>
+                                    <option value="3">Complementary Store</option>
+                                    <option value="4">Others</option>
+                                </select>
+                            </div>
+                            <div class="col-100 p-3">
+                                <textarea asp-for="Quest" class="form-control" placeholder="*Tell us how we can help you.." style="height:200px" required></textarea>
+                                <span asp-validation-for="Quest" class="text-danger"></span>
+                            </div>
+                            <br>
+                            <div class="row p-3 w-50">
+                                <input class="btnClass7" type="submit" value="Submit">
+                            </div>
+                        </form>
+
+                </div>
+                }
+                else
+                {
+                    <div class="FeatCon1 mx-auto">
+                        <div class="row p-1 mt-3 align-items-center justifty-content-center RevDir1">
+                            <div class="col-md-6 divW1">
+                                <p class="ParagraphP4 my-5">Please <a href="/Account/Login" class="text-danger">sign in</a> to fill out a form with more details about your question/inquiry</p>
+                            </div>
+                            <div class="col-md-6 divW2">
+                                <img id="mainImage" class="w-100 h-100" src="../../images/contact.jpg" alt="Service image" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+         </div>
+    </div>
+    <div id="ticketDetails">
+        <!-- Ticket details will be displayed here -->
+    </div>
+</header>
